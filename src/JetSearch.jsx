@@ -86,7 +86,7 @@ const JetSearch = () => {
   };
 
   return (
-    <div ref={containerRef} className="max-w-5xl mx-auto p-4">
+    <div ref={containerRef} className="max-w-5xl mx-auto p-4 mt-40 items-center">
       {/* Search Bar */}
       <div className="bg-white rounded-lg shadow-md p-4 mb-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
