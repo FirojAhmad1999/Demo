@@ -9,7 +9,7 @@ const JetSearch = () => {
   const [toLocation, setToLocation] = useState('');
   const [date, setDate] = useState('');
   const [passengers, setPassengers] = useState('');
-  
+
   const [searchResults] = useState([
     {
       type: 'Super Light Jet',
@@ -18,8 +18,8 @@ const JetSearch = () => {
       price: '37,550',
       images: {
         exterior: '/api/placeholder/300/200',
-        interior: '/api/placeholder/300/200'
-      }
+        interior: '/api/placeholder/300/200',
+      },
     },
     {
       type: 'Midsize Jet',
@@ -28,9 +28,9 @@ const JetSearch = () => {
       price: '43,500',
       images: {
         exterior: '/api/placeholder/300/200',
-        interior: '/api/placeholder/300/200'
-      }
-    }
+        interior: '/api/placeholder/300/200',
+      },
+    },
   ]);
 
   const updateParentHeight = () => {
@@ -43,8 +43,7 @@ const JetSearch = () => {
   useEffect(() => {
     updateParentHeight();
     window.addEventListener('resize', updateParentHeight);
-    
-    // Listen for messages from parent
+
     const handleMessage = (event) => {
       if (event.data.type === 'windowResized') {
         updateParentHeight();
@@ -79,15 +78,17 @@ const JetSearch = () => {
   const handleSearch = async () => {
     setIsLoading(true);
     setIsExpanded(true);
-    
+
+    // Notify parent to scroll to the top
+    window.parent.postMessage({ type: 'scrollToTop' }, '*');
+
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsLoading(false);
   };
 
   return (
     <div ref={containerRef} className="max-w-5xl mx-auto p-4 mt-40 items-center">
-      {/* Search Bar */}
       <div className="bg-white rounded-lg shadow-md p-4 mb-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="relative">
@@ -155,7 +156,6 @@ const JetSearch = () => {
         </button>
       </div>
 
-      {/* Results Section */}
       <div className={`transition-all duration-300 ${isExpanded ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
         {searchResults.map((jet, index) => (
           <div key={index} className="bg-white rounded-lg shadow-md p-4 mb-4">
@@ -197,4 +197,3 @@ const JetSearch = () => {
 };
 
 export default JetSearch;
-
